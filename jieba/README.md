@@ -1,3 +1,9 @@
+# 注意：
+## 由于使用了多线程分词，现在的程序不支持在windows下运行，请使用linux或mac！
+## 或者注释掉jieba.enable_parallel(2) 
+
+---------------
+
 # 流程
 1. 先运行init.py，把train.data_backup分成train.data和test.data，以及answer.data
 2. 再运行train.py，对train.data进行训练，生成训练参数文件parameter_categorys.dat和parameter_words.dat
