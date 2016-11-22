@@ -1,6 +1,8 @@
 #encoding=utf-8
 
 import jieba
+jieba.load_userdict("userdict.txt")
+jieba.enable_parallel(2) # 开启并行分词模式，参数为并行进程数
 import re
 import sys
 import codecs
@@ -38,9 +40,6 @@ categorys=cPickle.load(f_parameter_categorys)
 dr="【|】|[|]|（|）|\(|\)|-|\+|/|\\\|~|\*".decode("utf-8")
 print "读取停止词..."
 stopwords={line.strip().decode("utf-8") for line in open('stopwords.txt').readlines()}  #读取停止词文件并保存到列表stopwords
-print "读取用户字典..."
-jieba.load_userdict("userdict.txt")
-print "读取完毕"
 
 if __name__=='__main__':
     #if debug:
@@ -52,9 +51,10 @@ if __name__=='__main__':
         ss=re.split(dr,s)
         scores={}
         for sss in ss:
+            #result=jieba.cut(sss, cut_all=True)
             result=jieba.cut(sss)
             for r in result :
-                if r not in stopwords and r!=" " and r!='\n' and words.has_key(r):
+                if r not in stopwords and r!=" " and r!='\n' and r!="" and words.has_key(r):
                     for c in words[r].incategorys:
                         #if 1.0*categorys[c].inwords[r].incount/categorys[c].count_sample > 0.02:
                             if not scores.has_key(c):
