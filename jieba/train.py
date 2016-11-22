@@ -1,6 +1,8 @@
 #encoding=utf-8
 
 import jieba
+jieba.load_userdict("userdict.txt")
+jieba.enable_parallel(2) # 开启并行分词模式，参数为并行进程数
 import re
 import sys
 import codecs
@@ -14,18 +16,13 @@ dr="【|】|[|]|（|）|\(|\)|-|\+|/|\\\|~|\*".decode("utf-8")
 print "读取停止词..."
 stopwords={line.strip().decode("utf-8") for line in open('stopwords.txt').readlines()}  #读取停止词文件并保存到列表stopwords
 #for ts in stopwords:
-#    print ts
+ #   print ts
 print "停止词读取完毕"
 
 f_data=codecs.open('train.data','r')
 f_fenci=codecs.open('fenci.dat','w',"utf-8")
 f_parameter_categorys=open('parameter_categorys.dat','wb')
 f_parameter_words=open('parameter_words.dat','wb')
-
-print "读取用户字典..."
-jieba.load_userdict("userdict.txt")
-print "用户字典读取完毕"
-print "初始化结构体..."
 
 class CATEGORY:
     class INWORD:
@@ -46,6 +43,7 @@ categorys={}
 
 count_read=0
 if __name__=='__main__':
+    print "开始训练..."
     for s in f_data:
         count_read+=1
         if count_read%10000==0:
@@ -61,9 +59,10 @@ if __name__=='__main__':
                 categorys[category]=CATEGORY()
             categorys[category].count_sample+=1
             for ssss in sss:
+                #result=jieba.cut(ssss, cut_all=True)
                 result=jieba.cut(ssss)
                 for r in result :
-                    if r not in stopwords and r!=" " and r!='\n':
+                    if r not in stopwords and r!=" " and r!='\n' and r!="":
                         if not words.has_key(r):
                             words[r]=WORD()
                         if not words[r].incategorys.has_key(category):
