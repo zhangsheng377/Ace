@@ -11,14 +11,20 @@ debug=True
 #dr="[\s+\.\!\/_,$%^*(+\"\']+|[+——！，。？、~@#￥%……&*（）]+".decode("utf-8")
 dr="【|】|[|]|（|）|\(|\)|-|\+|/|\\\|~|\*".decode("utf-8")
 
+print "读取停止词..."
 stopwords={line.strip().decode("utf-8") for line in open('stopwords.txt').readlines()}  #读取停止词文件并保存到列表stopwords
 #for ts in stopwords:
 #    print ts
+print "停止词读取完毕"
 
 f_data=codecs.open('train.data','r')
 f_fenci=codecs.open('fenci.dat','w',"utf-8")
-f_parameter_categorys=file('parameter_categorys.dat','w')
-f_parameter_words=file('parameter_words.dat','w')
+f_parameter_categorys=open('parameter_categorys.dat','wb')
+f_parameter_words=open('parameter_words.dat','wb')
+
+print "读取用户字典..."
+jieba.load_userdict("userdict.txt")
+print "用户字典读取完毕"
 
 class CATEGORY:
     class INWORD:
@@ -37,8 +43,12 @@ class WORD:
 words={}
 categorys={}
 
+count_read=0
 if __name__=='__main__':
     for s in f_data:
+        count_read+=1
+        if count_read%10000==0:
+            print "训练样本数 ："+"%d"%count_read
         ss=s.decode("utf-8").strip().split("||",1)
         if len(ss)>1:
             if debug:
@@ -67,19 +77,21 @@ if __name__=='__main__':
             if debug:
                 #sys.stdout.write("\n")
                 f_fenci.write("\n")
+    print "正在总体训练中..."
     for w in words:
         for c in words[w].incategorys:
             categorys[c].inwords[w].weight=1.0*categorys[c].inwords[w].incount/words[w].count
-            if debug:
-                print w,c,categorys[c].inwords[w].incount,words[w].count,categorys[c].inwords[w].weight
+            #if debug:
+               # print w,c,categorys[c].inwords[w].incount,words[w].count,categorys[c].inwords[w].weight
     
     print "\n训练结束，正在保存..."
     cPickle.dump(words,f_parameter_words)
     cPickle.dump(categorys,f_parameter_categorys)
     print "保存完毕"
 
-    f_data.close()
-    f_fenci.close()
-        
+f_data.close()
+f_fenci.close()
+f_parameter_words.close()
+f_parameter_categorys.close()  
     
                 

@@ -1,3 +1,11 @@
+# 流程
+1. 先运行init.py，把train.data_backup分成train.data和test.data，以及answer.data
+2. 再运行train.py，对train.data进行训练，生成训练参数文件parameter_categorys.dat和parameter_words.dat
+3. 再运行test.py，对test.data进行测试，输出testanswer.data
+4. 最后运行successrate.py，对比answer.data和testanswer.data，在屏幕上输出正确率。
+
+--------------------------
+
 jieba
 ========
 “结巴”中文分词：做最好的 Python 中文分词组件
