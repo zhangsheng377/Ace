@@ -4,6 +4,8 @@
 3. 再运行test.py，对test.data进行测试，输出testanswer.data
 4. 最后运行successrate.py，对比answer.data和testanswer.data，在屏幕上输出正确率。
 
+![正确率](../pic/正确率.png)
+
 --------------------------
 
 jieba
