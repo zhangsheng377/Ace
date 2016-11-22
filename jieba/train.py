@@ -25,6 +25,7 @@ f_parameter_words=open('parameter_words.dat','wb')
 print "读取用户字典..."
 jieba.load_userdict("userdict.txt")
 print "用户字典读取完毕"
+print "初始化结构体..."
 
 class CATEGORY:
     class INWORD:
