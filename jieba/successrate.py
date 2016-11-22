@@ -13,7 +13,7 @@ if __name__=='__main__':
         print "answer.data与testanswer.data不匹配"
     else:
         count=0
-        for i in range(length):
+        for i in range(0,length-1):
             if answer[i]==testanswer[i]:
                 count+=1
         print "success rate : "+"%f"%(1.0*count/length)

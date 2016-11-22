@@ -56,7 +56,7 @@ if __name__=='__main__':
             for r in result :
                 if r not in stopwords and r!=" " and r!='\n' and words.has_key(r):
                     for c in words[r].incategorys:
-                        if 1.0*categorys[c].inwords[r].incount/categorys[c].count_sample > 0.01:
+                        #if 1.0*categorys[c].inwords[r].incount/categorys[c].count_sample > 0.02:
                             if not scores.has_key(c):
                                 scores[c]=0.0
                             scores[c]+=categorys[c].inwords[r].weight
