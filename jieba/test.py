@@ -8,7 +8,7 @@ import sys
 import codecs
 import cPickle
 
-debug=False
+debug=True
 
 class CATEGORY:
     class INWORD:
@@ -47,7 +47,13 @@ if __name__=='__main__':
          #   for c in words[w].incategorys:
           #      print w,c,categorys[c].inwords[w].incount,words[w].count,categorys[c].inwords[w].weight
     print "正在生成测试文件..."
+    count_read=0
     for s in f_test:
+        count_read+=1
+        ''''
+        if debug:
+            print "测试样本数 ："+"%d"%count_read
+        '''
         ss=re.split(dr,s)
         scores={}
         for sss in ss:
@@ -60,11 +66,21 @@ if __name__=='__main__':
                             if not scores.has_key(c):
                                 scores[c]=0.0
                             scores[c]+=categorys[c].inwords[r].weight
-                            #print r,c,categorys[c].inwords[r].weight
+                            if debug:
+                                if count_read==1:
+                                    if c=="381" or c=="869":
+                                        print r,c,categorys[c].inwords[r].weight,1.0*categorys[c].inwords[r].incount/categorys[c].count_sample
+                
+        
         if debug:
-            for c in scores:
-                print c+" "+'%f'%scores[c]+" \\",
-            print ""
+            if count_read==1:
+                print s,": "
+                for c in scores:
+                    if c=="381" or c=="869":
+                        print "\t"+c+" "+'%f'%scores[c]
+                    #print c+" "+'%f'%scores[c]+" \\",
+                #print ""
+        
         score_max=max(scores.values())
         for c in scores:
             if scores[c]==score_max:

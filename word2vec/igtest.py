@@ -48,12 +48,13 @@ if __name__ == '__main__':
                     if w[0].isdigit():
                         #print w[1]
                         if scores.has_key(w[0]):
-                            scores[w[0]]+=w[1]
+                            scores[w[0]]+=float(w[1])
                         else:
-                            scores[w[0]]=w[1]
+                            scores[w[0]]=float(w[1])
             
         if len(scores)>0:
             score_max=max(scores.values())
+            #print type(score_max)
             for c in scores:
                 if scores[c]==score_max:
                     category=c
