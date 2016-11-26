@@ -29,6 +29,9 @@ if __name__ == '__main__':
     print u"开始装载模型\n"
     model = word2vec.Word2Vec.load(model_out)
 
+    print model.most_similar([u"",u"1"],u"")
+
+
     print u"载入停用词"
     stopWords_set = get_stopWords('stopwords.txt')
     print "正在生成测试结果文件..."
