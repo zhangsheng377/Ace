@@ -1,7 +1,7 @@
 ## -*- coding: utf-8 -*-
 import re
 import jieba
-jieba.load_userdict('userdict.txt')
+jieba.load_userdict('../jieba/userdict.txt')
 jieba.enable_parallel(2) # 开启并行分词模式，参数为并行进程数
 import sys
 import os
@@ -26,7 +26,7 @@ def train_news(fin_name, fout_name):
     f_fenci=codecs.open('fenci.dat','w',"utf-8")
 
     print u"载入停用词"
-    stopWords_set = get_stopWords('stopwords.txt')
+    stopWords_set = get_stopWords('../jieba/stopwords.txt')
     print "载入训练样本..."
     count_read=0
     for line in fin.readlines():
@@ -72,7 +72,7 @@ def creat_model(fin_name_in, model_out):
     sentences = word2vec.Text8Corpus(fin_name_in)  # 加载语料
     print u"正在训练模型" + model_out + '\n'
     # 训练skip-gram模型,默认window=5
-    model = word2vec.Word2Vec(sentences, size=100, sg=1, min_count=4, iter=40, workers=20)
+    model = word2vec.Word2Vec(sentences, size=500, sg=1, min_count=0, iter=40, workers=20)
     # 使用一些词语来限定,分为正向和负向的
     model.save(model_out)
     print u"模型训练完毕" + model_out + '\n'
