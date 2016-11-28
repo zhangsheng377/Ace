@@ -8,7 +8,7 @@ import sys
 import codecs
 import cPickle
 
-debug=True
+debug=False
 
 class CATEGORY:
     class INWORD:
