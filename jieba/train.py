@@ -52,7 +52,7 @@ if __name__=='__main__':
         if len(ss)>1:
             if debug:
                 #print ss[1]
-                f_fenci.write(ss[1]+"\n")
+                f_fenci.write(ss[0]+"\\"+ss[1]+"\n")
             category=ss[0]
             sss=re.split(dr,ss[1])
             if not categorys.has_key(category):
