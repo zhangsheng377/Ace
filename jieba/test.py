@@ -9,6 +9,10 @@ import codecs
 import cPickle
 
 debug=False
+_DEBUG_TIME_=True
+
+if _DEBUG_TIME_:
+    import time
 
 class CATEGORY:
     class INWORD:
@@ -48,12 +52,15 @@ if __name__=='__main__':
           #      print w,c,categorys[c].inwords[w].incount,words[w].count,categorys[c].inwords[w].weight
     print "正在生成测试文件..."
     count_read=0
+    total_time=0.0
     for s in f_test:
         count_read+=1
         ''''
         if debug:
             print "测试样本数 ："+"%d"%count_read
         '''
+        if _DEBUG_TIME_:
+            temp_time=time.clock()
         ss=re.split(dr,s)
         scores={}
         for sss in ss:
@@ -86,10 +93,14 @@ if __name__=='__main__':
             if scores[c]==score_max:
                 category=c
                 break
+        if _DEBUG_TIME_:
+            total_time+=time.clock()-temp_time
+            #print str(total_time)
         #d=dict([(k,v) for k,v in scores.items() if v==max(scores.values())])
         #print category
         f_testanswer.write(category+"\n")
     print "测试文件testanswer.data生成完毕"
+    print "平均每个测试用例耗时 ："+"%f"%(total_time/count_read*1000)+"ms"
 
 f_parameter_words.close()
 f_parameter_categorys.close()
